@@ -28,7 +28,7 @@ ReplaceSystemVars(); //заменяем системные переменные
 diffinfo(); //инфо ns-записи, path to file, phpversion
 FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
-// showmemory();	// проверка memory
+showmemory();	// проверка memory
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
