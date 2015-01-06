@@ -5,7 +5,7 @@
 </head>
 <body>
 <?php
-echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150105</h1>';
+echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150106</h1>';
 // php_value memory_limit 192M можно добавить в htaccess если мало при проверке showmemory
 
 
@@ -328,15 +328,11 @@ function toolzacheck() {
 	$ourcompare = 'http://'.$_SERVER["HTTP_HOST"].'/magictoolza.html';
 	$compareinfo = getpage($ourcompare);
 	if ($magicpage === $compareinfo) {
-		echo "<p>Toolza <span style='color:#004010'>installed</span></p>";
-		// $htaccesslook = file_get_contents('.htaccess');
-		// var_dump($htaccesslook);
-		// preg_match ('|/(.*)/toolza|isU', $htaccesslook, $contentsht, PREG_SET_ORDER);
-		// var_dump($contentsht);
-		// foreach ($contentsht as $contentht) {
-			// echo '<br> GUID:'.$contentht.'<br>';
-			// }
-	}
+		echo "<p>Toolza <span style='color:#004010'>installed</span>";
+		$htaccesslook = file_get_contents('.htaccess');
+		preg_match ('|.*/([\w\d-]+)/.*toolza.php\$|ism', $htaccesslook, $contentsht);
+		echo ' in '.$contentsht[1].'</p>';
+	} 
 	else echo "<p>Toolza <span style='color:#660000'>not installed</span></p>";
 }	
 	
