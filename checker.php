@@ -331,7 +331,11 @@ function toolzacheck() {
 		echo "<p>Toolza <span style='color:#004010'>installed</span>";
 		$htaccesslook = file_get_contents('.htaccess');
 		preg_match ('|.*/([\w\d-]+)/.*toolza.php\$|ism', $htaccesslook, $contentsht);
-		echo ' in '.$contentsht[1].'</p>';
+		echo ' in '.$contentsht[1].'';
+		if (is_dir(($contentsht[1]))){
+			echo ' (directory found)</p>';
+		}
+		else echo ' (directory not found)</p>';
 	} 
 	else echo "<p>Toolza <span style='color:#660000'>not installed</span></p>";
 }	
