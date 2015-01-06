@@ -261,8 +261,8 @@ function modrewritecheck() {
 	phpinfo(8);  
 	$inf = ob_get_contents();  
 	ob_end_clean(); 
-	if (preg_match('/Loaded Modules.*mod_rewrite/i', $inf)) echo '<br>mod_rewrite <span style="color:#004010"><b>ON</b></span>';  
-	else echo '<br>mod_rewrite is <span style="color:red"><b>OFF</b></span>';  
+	if (preg_match('/Loaded Modules.*mod_rewrite/i', $inf)) echo '<br>mod_rewrite <span style="color:#004010"><b>found</b></span>';  
+	else echo '<br>mod_rewrite <span style="color:red"><b>not found</b></span>';  
 }
 
 
