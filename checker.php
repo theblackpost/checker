@@ -48,6 +48,55 @@ erase_all(); //стираем за собой все временные файл
 
 
 
+function setstart() {
+	error_reporting( E_WARNING ); //отображаем только значительные предупреждения
+	ini_set('display_errors', 1); //не показываем ошибки
+	header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
+}
+
+function filesBK() {
+	echo '<b>Checker BackUps:</b><br>';
+	echo '<ul>';
+	$htaccessfile = ".htaccess";
+	if (!file_exists($htaccessfile)) {
+		$htaccesswrite = fopen($htaccessfile, "w");
+		fwrite($htaccesswrite, "#.htaccess file");
+		fclose($htaccesswrite);
+		echo "<li>.htaccess created</li>";
+	} else {
+		echo "<li>.htaccess already exist</li>";
+	}
+	
+	if (file_exists('.htaccess')) {
+		if (copy (".htaccess", ".htaccess_checker_autobackup")) {
+			echo '<li>.htaccess backup created</li>';}
+			else exit ('<li style="color:red">cant create .htaccess backup</li>');
+		}
+		else echo ('<li style="color:#993300">file .htaccess is not exist</li>');
+	
+	if (file_exists('index.php')) {
+		if (copy ("index.php", "index.php_checker_autobackup")) {
+			echo '<li>index.php backup created</li>';}
+			else exit ('<li style="color:red">cant create index.php backup</li>');
+		}
+		else echo ('<li style="color:#993300">file index.php is not exist</li>');
+	
+	if (file_exists('index.html')) {
+		if (copy ("index.html", "index.html_checker_autobackup")) {
+			echo '<li>index.html backup created</li>';}
+			else exit ('<li style="color:red">cant create index.html backup</li>');
+		}
+		else echo ('<li style="color:#993300">file index.html is not exist</li>');
+		
+	if (file_exists('index.htm')) {
+		if (copy ("index.htm", "index.htm_checker_autobackup")) {
+			echo '<li>index.htm backup created</li>';}
+			else exit ('<li style="color:red">cant create index.htm backup</li>');
+		}
+		else echo ('<li style="color:#993300">file index.htm is not exist</li>');
+		
+	echo '</ul>';
+}
 
 //CMS
 function curl_redir_exec($ch) {
@@ -247,71 +296,6 @@ function cmscheck() {
 	echo check(grab($_SERVER["HTTP_HOST"])); //выводим CMS
 }
 
-
-function setstart() {
-	error_reporting( E_WARNING ); //отображаем только значительные предупреждения
-	ini_set('display_errors', 0); //не показываем ошибки
-	header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
-}
-
-
-function modrewritecheck() {
-	ob_end_flush(); 
-	ob_start();   
-	phpinfo(8);  
-	$inf = ob_get_contents();  
-	ob_end_clean(); 
-	if (preg_match('/Loaded Modules.*mod_rewrite/i', $inf)) echo '<br>mod_rewrite <span style="color:#004010"><b>found</b></span>';  
-	else echo '<br>mod_rewrite <span style="color:red"><b>not found</b></span>';  
-}
-
-
-function filesBK() {
-	echo '<b>Checker BackUps:</b><br>';
-	echo '<ul>';
-	$htaccessfile = ".htaccess";
-	if (!file_exists($htaccessfile)) {
-		$htaccesswrite = fopen($htaccessfile, "w");
-		fwrite($htaccesswrite, "#.htaccess file");
-		fclose($htaccesswrite);
-		echo "<li>.htaccess created</li>";
-	} else {
-		echo "<li>.htaccess already exist</li>";
-	}
-	
-	if (file_exists('.htaccess')) {
-		if (copy (".htaccess", ".htaccess_checker_autobackup")) {
-			echo '<li>.htaccess backup created</li>';}
-			else exit ('<li style="color:red">cant create .htaccess backup</li>');
-		}
-		else echo ('<li style="color:#993300">file .htaccess is not exist</li>');
-	
-	if (file_exists('index.php')) {
-		if (copy ("index.php", "index.php_checker_autobackup")) {
-			echo '<li>index.php backup created</li>';}
-			else exit ('<li style="color:red">cant create index.php backup</li>');
-		}
-		else echo ('<li style="color:#993300">file index.php is not exist</li>');
-	
-	if (file_exists('index.html')) {
-		if (copy ("index.html", "index.html_checker_autobackup")) {
-			echo '<li>index.html backup created</li>';}
-			else exit ('<li style="color:red">cant create index.html backup</li>');
-		}
-		else echo ('<li style="color:#993300">file index.html is not exist</li>');
-		
-	if (file_exists('index.htm')) {
-		if (copy ("index.htm", "index.htm_checker_autobackup")) {
-			echo '<li>index.htm backup created</li>';}
-			else exit ('<li style="color:red">cant create index.htm backup</li>');
-		}
-		else echo ('<li style="color:#993300">file index.htm is not exist</li>');
-		
-	echo '</ul>';
-}
-
-
-
 function toolzacheck() {
 	$intfile = fopen("magictoolza.html","w+");
 		$textinfile = "<pre>
@@ -339,7 +323,17 @@ function toolzacheck() {
 	} 
 	else echo "<p>Toolza <span style='color:#660000'>not installed</span></p>";
 }	
-	
+
+function modrewritecheck() {
+	ob_end_flush(); 
+	ob_start();   
+	phpinfo(8);  
+	$inf = ob_get_contents();  
+	ob_end_clean(); 
+	if (preg_match('/Loaded Modules.*mod_rewrite/i', $inf)) echo '<br>mod_rewrite <span style="color:#004010"><b>found</b></span>';  
+	else echo '<br>mod_rewrite <span style="color:red"><b>not found</b></span>';  
+}
+
 $_mainFileName = "index.php";
 $_fileNameChecker = "checker.php";
 
