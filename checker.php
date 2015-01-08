@@ -29,7 +29,7 @@ diffinfo(); //инфо ns-записи, path to file, phpversion
 FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
 memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - ставим  php_value memory_limit 192M или кратно выше в .htaccess в начало
-// showmemory();	// проверка memory после index.php
+showmemory();	// проверка memory после index.php
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
@@ -364,7 +364,7 @@ function showmemory(){
 		// echo "<br />Memory before Index.php (byte): " . memory_get_usage(true) . " = " . round(memory_get_usage(true)/1048576,2) . " Mb";
 	ob_end_flush(); 
 	ob_start();
-	require_once $_mainFileName; //$FileName ;
+	include $_mainFileName; //$FileName ;
 	$file = ob_get_contents();
 	$memory = memory_get_usage(true);
 	ob_end_clean();
