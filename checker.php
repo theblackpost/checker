@@ -364,7 +364,7 @@ function showmemory(){
 		// echo "<br />Memory before Index.php (byte): " . memory_get_usage(true) . " = " . round(memory_get_usage(true)/1048576,2) . " Mb";
 	ob_end_flush(); 
 	ob_start();
-	include $_mainFileName; //$FileName ;
+	include_once $_mainFileName; //$FileName ;
 	$file = ob_get_contents();
 	$memory = memory_get_usage(true);
 	ob_end_clean();
