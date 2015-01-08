@@ -48,7 +48,7 @@ erase_all(); //стираем за собой все временные файл
 
 
 function setstart() {
-	error_reporting( E_ERROR ); //отображаем только значительные предупреждения
+	error_reporting( E_ERROR ); //отображаем только значительные ошибки
 	ini_set('display_errors', 1); //не показываем ошибки
 	header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
 }
@@ -296,21 +296,9 @@ function cmscheck() {
 }
 
 function toolzacheck() {
-	$intfile = fopen("magictoolza.html","w+");
-		$textinfile = "<pre>
-            <(__)> | | |
-            | \/ | \_|_/
-            \^  ^/   |
-            /\--/\  /|
-           /  \/  \/ |
-    </pre>";
-	fwrite($intfile,$textinfile);
-	fclose($intfile);
 	$toolzaurl = $_SERVER["HTTP_HOST"].'/?magiya=poyav1s';
 	$magicpage = getpage($toolzaurl);
-	$ourcompare = 'http://'.$_SERVER["HTTP_HOST"].'/magictoolza.html';
-	$compareinfo = getpage($ourcompare);
-	if ($magicpage === $compareinfo) {
+	if (preg_match ('|.*<\(__\)>.*|ism',$magicpage,$res)) {
 		echo "<p>Toolza <span style='color:#004010'>installed</span>";
 		$htaccesslook = file_get_contents('.htaccess');
 		preg_match ('|.*/([\w\d-]+)/.*toolza.php\$|ism', $htaccesslook, $contentsht);
@@ -321,7 +309,7 @@ function toolzacheck() {
 		else echo ' (directory not found)</p>';
 	} 
 	else echo "<p>Toolza <span style='color:#660000'>not installed</span></p>";
-}	
+}		
 
 function modrewritecheck() {
 	ob_end_flush(); 
@@ -360,16 +348,40 @@ function memorylimit(){
 }
 
 function showmemory(){
-	$_mainFileName = "index.php";
+	$_mainFileName = $_SERVER["DOCUMENT_ROOT"]."/index.php";
+	$_htmlFileName = $_SERVER["DOCUMENT_ROOT"]."/index.html";
+	$_htmFileName = $_SERVER["DOCUMENT_ROOT"]."/index.htm";
 		// echo "<br />Memory before Index.php (byte): " . memory_get_usage(true) . " = " . round(memory_get_usage(true)/1048576,2) . " Mb";
-	ob_end_flush(); 
-	ob_start();
-	include_once $_mainFileName; //$FileName ;
-	$file = ob_get_contents();
-	$memory = memory_get_usage(true);
-	ob_end_clean();
-	echo "<br />Memory after Index.php (byte): " . $memory . " = " . round($memory/1048576,2) . " Mb" . "<br> (Need more than <b>20 Mb</b> for toolza correct work: Memory Limit - Memory after Index.php)<br>";
+	if (file_exists($_mainFileName))	{
+		ob_end_flush(); 
+		ob_start();
+		@include_once $_mainFileName;
+		$file = ob_get_contents();
+		$memory = memory_get_usage(true);
+		ob_end_clean();
+		echo "<br />Memory after Index.php (byte): " . $memory . " = " . round($memory/1048576,2) . " Mb" . "<br> (Need more than <b>20 Mb</b> for toolza correct work: Memory Limit - Memory after Index.php)<br>";
 	}
+	elseif (file_exists($_htmlFileName))	{
+		ob_end_flush(); 
+		ob_start();
+		@include_once $_htmlFileName;
+		$file = ob_get_contents();
+		$memory = memory_get_usage(true);
+		ob_end_clean();
+		echo "<br />Memory after Index.html (byte): " . $memory . " = " . round($memory/1048576,2) . " Mb" . "<br> (Need more than <b>20 Mb</b> for toolza correct work: Memory Limit - Memory after Index.html)<br>";
+	}
+	elseif (file_exists($_htmFileName))	{
+		ob_end_flush(); 
+		ob_start();
+		@include_once $_htmFileName;
+		$file = ob_get_contents();
+		$memory = memory_get_usage(true);
+		ob_end_clean();
+		echo "<br />Memory after Index.htm (byte): " . $memory . " = " . round($memory/1048576,2) . " Mb" . "<br> (Need more than <b>20 Mb</b> for toolza correct work: Memory Limit - Memory after Index.htm)<br>";
+	}
+	
+	else echo '<br>index.php, index.html or index.htm not found. Cant check memory usage';
+}
 
 
 
