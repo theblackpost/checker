@@ -48,7 +48,7 @@ erase_all(); //стираем за собой все временные файл
 
 
 function setstart() {
-	error_reporting( E_WARNING ); //отображаем только значительные предупреждения
+	error_reporting( E_ERROR ); //отображаем только значительные предупреждения
 	ini_set('display_errors', 1); //не показываем ошибки
 	header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
 }
@@ -420,9 +420,11 @@ class Checker {
 
 
         if($this->Exists('fsockopen') && $this->Exists('fwrite')){
-			$curlv = curl_version();
-            $this->Log('cURL version', $curlv[version]); //curl version
             $this->Log('fsockopen-fwrite', 'ok');
+			if ($this->Exists('curl_version')){ //curl version
+			$curlv = curl_version();
+			$this->Log('cURL version', $curlv[version]); 
+			} else $this->Log('cURL version','not found');
             $this->_Http = new Socket();
         } elseif($this->Exists('curl_init') && $this->Exists('curl_exec')){
             $this->Log('curl_init-curl_exec', 'ok');
@@ -657,17 +659,6 @@ function getpage($nadres){
 }
 
 function erase_all() { //чистим за собой
-		$path = './test-123-folderUniquename74';
-		unlink('./test-123-folderUniquename74/info.php');
-		echo "File info deleted <br />";
-		unlink('magictoolza.html');
-		echo "File magictoolza deleted <br />";
-		rmdir('./test-123-folderUniquename74');
-		echo "Folder test-123-folderUniquename74 deleted<br />";
-		unlink('testFirst.html');
-		echo "File testFirst deleted <br />";
-		unlink('testSecond.html');
-		echo "File testSecond deleted <br />";
 
 		$row_number = 0; //Удалим 1 строку из .htaccess (rewriteengine on)
 		$file = file(".htaccess"); // Считываем весь файл в массив 
@@ -686,8 +677,24 @@ function erase_all() { //чистим за собой
 		fputs($fp, implode("", $file));
 		fclose($fp);
 		echo ".htaccess line \"RewriteRule testFirst.html /testSecond.html [L,R=301]\" deleted <br>"; 
-		unlink('checker.php');
-		echo "File checker.php deleted <br />";
+		
+		
+		$path = './test-123-folderUniquename74';
+		unlink('./test-123-folderUniquename74/info.php');
+		rmdir('./test-123-folderUniquename74');
+		echo "Folder test-123-folderUniquename74 deleted<br />";
+		
+		$files_root = array(
+			'magictoolza.html',
+			'testFirst.html',
+			'testSecond.html',
+			'checker.php'
+		);
+		foreach ($files_root as $file_root){
+			unlink($file_root);
+		}
+		echo 'files_root deleted <br>';
+		
 }
 
 ?>
