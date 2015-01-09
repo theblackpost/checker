@@ -5,7 +5,7 @@
 </head>
 <body>
 <?php
-echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150106</h1>';
+echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150109</h1>';
 // php_value memory_limit 192M можно добавить в htaccess если мало при проверке showmemory
 
 
@@ -29,7 +29,7 @@ diffinfo(); //инфо ns-записи, path to file, phpversion
 FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
 memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - ставим  php_value memory_limit 192M или кратно выше в .htaccess в начало
-showmemory();	// проверка memory после index.php
+// showmemory();	// проверка memory после index.php
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
@@ -348,9 +348,9 @@ function memorylimit(){
 }
 
 function showmemory(){
-	$_mainFileName = $_SERVER["DOCUMENT_ROOT"]."/index.php";
-	$_htmlFileName = $_SERVER["DOCUMENT_ROOT"]."/index.html";
-	$_htmFileName = $_SERVER["DOCUMENT_ROOT"]."/index.htm";
+	$_mainFileName = "index.php";
+	$_htmlFileName = "index.html";
+	$_htmFileName = "index.htm";
 		// echo "<br />Memory before Index.php (byte): " . memory_get_usage(true) . " = " . round(memory_get_usage(true)/1048576,2) . " Mb";
 	if (file_exists($_mainFileName))	{
 		ob_end_flush(); 
@@ -364,7 +364,7 @@ function showmemory(){
 	elseif (file_exists($_htmlFileName))	{
 		ob_end_flush(); 
 		ob_start();
-		@include_once $_htmlFileName;
+		@include_once $_htmlFileName; 
 		$file = ob_get_contents();
 		$memory = memory_get_usage(true);
 		ob_end_clean();
@@ -373,7 +373,7 @@ function showmemory(){
 	elseif (file_exists($_htmFileName))	{
 		ob_end_flush(); 
 		ob_start();
-		@include_once $_htmFileName;
+		@include_once $_htmFileName; 
 		$file = ob_get_contents();
 		$memory = memory_get_usage(true);
 		ob_end_clean();
@@ -389,7 +389,7 @@ function showmemory(){
 function FileCreateRead() {
 		$structure = './test-123-folderUniquename74/';
 		if (!mkdir($structure, 0777, true)) 
-		echo "Cant create directory...";
+		echo "Cant create directory...<br>";
 		else
 		chmod("./test-123-folderUniquename74", 0777); 
 		//создаем файл info.php, наполняем его
@@ -398,7 +398,7 @@ function FileCreateRead() {
 		if (fwrite($intfile,$textinfile))
 		echo "file created: ";
 		else
-		echo "file created: false";
+		echo "file created: <span style='color:red'><b>false</b></span>";
 		fclose($intfile);
 		//читаем файл
 		include './test-123-folderUniquename74/info.php';
@@ -505,7 +505,7 @@ class Checker {
                 return;
             }
         }
-        $this->Log("redirect", "not found");
+        $this->Log("redirect", "<span style='color:red'>not found</span>");
     }
 
     function Log($name, $rez){
@@ -520,7 +520,7 @@ class Socket{
 
         $stream = fsockopen($host, 80, $errno, $errstr, 30);
         if (!$stream) {
-            echo "Ошибка сокета: $errstr ($errno)<br>\n";
+            echo "<span style='color:red'>Ошибка сокета: $errstr ($errno)</span><br>\n";
         }
 
         $out  = "GET ". $url ." HTTP/1.0\r\n";
