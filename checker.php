@@ -29,7 +29,8 @@ diffinfo(); //инфо ns-записи, path to file, phpversion
 FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
 memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - ставим  php_value memory_limit 192M или кратно выше в .htaccess в начало
-// showmemory();	// проверка memory после index.php
+shutdown(); //если showmemory показывает Error - продолжаем с checkerstart(); и завершаем erase_all();
+showmemory();	// проверка memory после index.php
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
@@ -46,6 +47,10 @@ erase_all(); //стираем за собой все временные файл
 
 ############     сами функции       ###############
 
+function shutdown() {
+register_shutdown_function('checkerstart'); 
+register_shutdown_function('erase_all'); 
+}
 
 function setstart() {
 	error_reporting( E_ERROR ); //отображаем только значительные ошибки
