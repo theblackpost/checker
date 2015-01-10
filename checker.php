@@ -30,7 +30,7 @@ FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
 memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - ставим  php_value memory_limit 192M или кратно выше в .htaccess в начало
 shutdown(); //если showmemory показывает Error - продолжаем с checkerstart(); и завершаем erase_all();
-showmemory();	// проверка memory после index.php
+showmemory();	// проверка memory после index.php 
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
@@ -483,14 +483,14 @@ class Checker {
     }
 
     function TestHtaccess(){
-        $firstFile = "testFirst.html";
-        $secondFile = "testSecond.html";
-        $htaccess = ".htaccess";
+        $firstFile = $_SERVER['DOCUMENT_ROOT']."/testFirst.html";
+        $secondFile = $_SERVER['DOCUMENT_ROOT']."/testSecond.html";
+        $htaccess = $_SERVER['DOCUMENT_ROOT']."/.htaccess";
 
         $fistContent = "FirstPage";
         $secondContent = "RedirectPage";
 
-        $htaccessRedirect = "RewriteEngine On" . "\n" . "RewriteRule $firstFile /$secondFile" . " [L,R=301]" . "\r";
+        $htaccessRedirect = "RewriteEngine On" . "\n" . "RewriteRule testFirst.html /testSecond.html" . " [L,R=301]" . "\r";
 
 
         $this->_IO->CreateFile($firstFile, $fistContent);
@@ -634,7 +634,7 @@ class OldFileIO extends BaseIO{
 
         $newContent = $fileContent . "\n" . $oldContent;
 
-        $handle = @fopen($fileName, "w+");
+        $handle = fopen($fileName, "w+");
 
         if(fwrite($handle,$newContent) === false){
             return false;
@@ -645,7 +645,6 @@ class OldFileIO extends BaseIO{
 
     function CreateFile($fileName, $fileContent){
         $handle = @fopen($fileName, "w+");
-
         if(fwrite($handle,$fileContent) === false){
             return false;
         }
@@ -678,34 +677,33 @@ function getpage($nadres){
 function erase_all() { //чистим за собой
 
 		$row_number = 0; //Удалим 1 строку из .htaccess (rewriteengine on)
-		$file = file(".htaccess"); // Считываем весь файл в массив 
+		$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив 
 		for($i = 0; $i < sizeof($file); $i++)
 		if($i == $row_number) unset($file[$i]);
-		$fp = fopen(".htaccess", "w");
+		$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
 		fputs($fp, implode("", $file));
 		fclose($fp);
 		echo ".htaccess line \"RewriteEngine On\" deleted <br/>";
 
-		$row_number = 0; //Удалим 2 строку из .htaccess ещё раз - (rewriterule testFirst to testSecond)
-		$file = file(".htaccess"); // Считываем весь файл в массив
+		$row_number = 0; //Удалим 2 строку из .htaccess ещё раз - (rewriterule testFirst to testSecond) 
+		$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив
 		for($i = 0; $i < sizeof($file); $i++)
 		if($i == $row_number) unset($file[$i]);
-		$fp = fopen(".htaccess", "w");
+		$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
 		fputs($fp, implode("", $file));
 		fclose($fp);
 		echo ".htaccess line \"RewriteRule testFirst.html /testSecond.html [L,R=301]\" deleted <br>"; 
 		
 		
-		$path = './test-123-folderUniquename74';
-		unlink('./test-123-folderUniquename74/info.php');
-		rmdir('./test-123-folderUniquename74');
+		$path = $_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74';
+		unlink($path.'/info.php');
+		rmdir($path);
 		echo "Folder test-123-folderUniquename74 deleted<br />";
 		
 		$files_root = array(
-			'magictoolza.html',
-			'testFirst.html',
-			'testSecond.html',
-			'checker.php'
+			$_SERVER['DOCUMENT_ROOT'].'/testFirst.html',
+			$_SERVER['DOCUMENT_ROOT'].'/testSecond.html',
+			$_SERVER['DOCUMENT_ROOT'].'/checker.php'
 		);
 		foreach ($files_root as $file_root){
 			unlink($file_root);
