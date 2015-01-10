@@ -294,7 +294,7 @@ function check($html) {
 					}
                 }
         }
-        return "<b>CMS</b>: Не определено<br>";
+        return "<b>CMS</b>: not defined<br>";
 }
 function cmscheck() {
 	echo check(grab($_SERVER["HTTP_HOST"])); //выводим CMS
