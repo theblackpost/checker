@@ -385,6 +385,7 @@ function showmemory(){
 		ob_end_flush(); 
 		ob_start();
 		@include_once $_htmlFileName; 
+		error_reporting( E_ERROR ); 
 		$file = ob_get_contents();
 		$memory = memory_get_usage(true);
 		ob_end_clean();
