@@ -5,7 +5,7 @@
 </head>
 <body>
 <?php
-echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150110</h1>';
+echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150112</h1>';
 // php_value memory_limit 192M можно добавить в htaccess если мало при проверке showmemory
 
 
@@ -22,8 +22,8 @@ echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_S
 
 setstart(); //отображение ошибок, задаем кодировку страницы
 filesBK(); //!!!  ВАЖНО  !!! тут закоментировать, если не работает при ошибке создания backup htaccess + ОБЯЗАТЕЛЬНО в самом низу erase_all();
-cmscheck(); //проверка CMS
-toolzacheck(); //проверка стоит ли тулза
+cms_curl_check(); //проверка CMS
+toolza_curl_check(); //проверка стоит ли тулза
 ReplaceSystemVars(); //заменяем системные переменные
 diffinfo(); //инфо ns-записи, path to file, phpversion
 FileCreateRead(); //создание папки
@@ -100,6 +100,18 @@ function filesBK() {
 		else echo ('<li style="color:#993300">file index.htm is not exist</li>');
 		
 	echo '</ul>';
+}
+
+//если curl есть, тогда проверяем ЦМС и наличие тулзы
+function cms_curl_check(){
+	if (function_exists('curl_init')) {
+		cmscheck();
+	}
+}
+function toolza_curl_check(){
+	if (function_exists('curl_init')) {
+		toolzacheck(); 
+	}
 }
 
 //CMS
@@ -297,7 +309,7 @@ function check($html) {
         return "<b>CMS</b>: not defined<br>";
 }
 function cmscheck() {
-	echo check(grab($_SERVER["HTTP_HOST"])); //выводим CMS
+	echo check(grab($_SERVER["HTTP_HOST"])); //выводим CMS 
 }
 
 function toolzacheck() {
@@ -322,8 +334,8 @@ function modrewritecheck() {
 	phpinfo(8);  
 	$inf = ob_get_contents();  
 	ob_end_clean(); 
-	if (preg_match('/Loaded Modules.*mod_rewrite/i', $inf)) echo '<br>mod_rewrite <span style="color:#004010"><b>found</b></span>';  
-	else echo '<br>mod_rewrite <span style="color:red"><b>not found</b></span>';  
+	if (preg_match('/Loaded Modules.*mod_rewrite/i', $inf)) echo '<br>mod_rewrite <span style="color:#004010">found</span>';  
+	else echo '<br>mod_rewrite <span style="color:orange">not found</span>';  
 }
 
 $_mainFileName = "index.php";
