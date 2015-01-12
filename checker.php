@@ -100,6 +100,10 @@ function filesBK() {
 		else echo ('<li style="color:#993300">file index.htm is not exist</li>');
 		
 	echo '</ul>';
+	$phpversion = phpversion(); //версия PHP
+	if (preg_match('|^4.*|',$phpversion)){
+		echo "<br><b>PHP Version: <span style='color:red'>".phpversion()."<br>Need 5+ PHP version for normal toolza working</span></b><br><br>";
+	} else echo "<br><b>PHP Version:  <span style='color:green'>".phpversion()."</span></b><br>";
 }
 
 //если curl есть, тогда проверяем ЦМС и наличие тулзы
@@ -360,16 +364,11 @@ function diffinfo(){
 		echo '<tr><td>MX-record: </td><td>'. ($dns_arr[0]['target']).'</td></tr></table>';
 	}
 	echo '<p> Path to file: '.$_SERVER["SCRIPT_FILENAME"].'</p>';
-	
-	$phpversion = phpversion(); //версия PHP
-	if (preg_match('|^4.*|',$phpversion, $vermatch4)){
-		echo "<b>PHP Version: <span style='color:red'>".phpversion()."<br>Need 5+ PHP version for normal toolza working</span></b><br><br>";
-	} else echo "<b>PHP Version:  <span style='color:green'>".phpversion()."</span></b><br>";
-	
 }
 
+
 function memorylimit(){
-	echo "<br><b>memory limit: </b>" . ini_get("memory_limit"); //memory limit in php.ini
+	echo "<br><b>memory limit: </b>" . ini_get("memory_limit") . '<br>'; //memory limit in php.ini
 }
 
 function showmemory(){
@@ -684,7 +683,7 @@ function getpage($nadres){
 	curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_VERBOSE, false);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_SSLVERSION, 3);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
