@@ -360,7 +360,12 @@ function diffinfo(){
 		echo '<tr><td>MX-record: </td><td>'. ($dns_arr[0]['target']).'</td></tr></table>';
 	}
 	echo '<p> Path to file: '.$_SERVER["SCRIPT_FILENAME"].'</p>';
-	echo "<b>PHP Version: </b>".phpversion()."<br>";
+	
+	$phpversion = phpversion(); //версия PHP
+	if (preg_match('|^4.*|',$phpversion, $vermatch4)){
+		echo "<b>PHP Version: <span style='color:red'>".phpversion()."<br>Need 5+ PHP version for normal toolza working</span></b><br><br>";
+	} else echo "<b>PHP Version:  <span style='color:green'>".phpversion()."</span></b><br>";
+	
 }
 
 function memorylimit(){
