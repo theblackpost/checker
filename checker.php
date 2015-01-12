@@ -301,9 +301,11 @@ function check($html) {
         foreach ($cms as $name => $rules) {
             $c = count($rules);
             for ($i = 0; $i < $c; $i++) {
-                if (stripos($html, $rules[$i]) !== FALSE) {
-                    return '<b>CMS</b>: '.$name . '<br>';
-					}
+				if (function_exists('stripos')) {
+					if (stripos($html, $rules[$i]) !== FALSE) {
+						return '<b>CMS</b>: '.$name . '<br>';
+						}
+					}	
                 }
         }
         return "<b>CMS</b>: not defined<br>";
@@ -350,12 +352,13 @@ function diffinfo(){
 
 	//выводим NS-записи хоста
 	$sitens = $_SERVER["HTTP_HOST"];
-	$dns_arr = dns_get_record($sitens,DNS_NS);
-	echo '<br><table><tr><td>NS-record 1: </td><td>'. ($dns_arr[0]['target']).'</td></tr>';
-	echo '<tr><td>NS-record 2: </td><td>'. ($dns_arr[1]['target']).'</td></tr>';
-	$dns_arr2 = dns_get_record($sitens,DNS_MX);
-	echo '<tr><td>MX-record: </td><td>'. ($dns_arr[0]['target']).'</td></tr></table>';
-
+	if (function_exists('dns_get_record')) {
+		$dns_arr = dns_get_record($sitens,DNS_NS);
+		echo '<br><table><tr><td>NS-record 1: </td><td>'. ($dns_arr[0]['target']).'</td></tr>';
+		echo '<tr><td>NS-record 2: </td><td>'. ($dns_arr[1]['target']).'</td></tr>';
+		$dns_arr2 = dns_get_record($sitens,DNS_MX);
+		echo '<tr><td>MX-record: </td><td>'. ($dns_arr[0]['target']).'</td></tr></table>';
+	}
 	echo '<p> Path to file: '.$_SERVER["SCRIPT_FILENAME"].'</p>';
 	echo "<b>PHP Version: </b>".phpversion()."<br>";
 }
