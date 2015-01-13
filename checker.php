@@ -466,7 +466,8 @@ class Checker {
             $this->Log('fsockopen-fwrite', 'ok');
 			if ($this->Exists('curl_version')){ //curl version
 			$curlv = curl_version();
-			$this->Log('cURL version', $curlv[version]); 
+			$curlver = $curlv['version'];
+			$this->Log("cURL version", "$curlver"); 
 			} else $this->Log('cURL version','not found');
             $this->_Http = new Socket();
         } elseif($this->Exists('curl_init') && $this->Exists('curl_exec')){
