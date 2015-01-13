@@ -201,7 +201,7 @@ function check($html) {
                 "CS Cart" => array("/skins/basic/customer/addons/","/skins/basic/customer/images/icons/favicon.ico","/auth-loginform?return_url=index.php","/index.php?dispatch=auth.recover_password","cm-popup-box hidden","cm-popup-switch hand cart-list-icon","cart-list hidden cm-popup-box cm-smart-position","index.php?dispatch=checkout.cart","cm-notification-container","/index.php?dispatch=pages.view&page_id="),	
                 "Danneo CMS" => array("Danneo Русская CMS", 'content="CMS Danneo'),	
                 "Demandware" => array("Demandware Analytics code", 'shortcut icon" type="image/png" href="http://demandware.edgesuite.net/','link rel="stylesheet" href="http://demandware.edgesuite.net/','img src="http://demandware.edgesuite.net/'),	
-                "DataLife Engine" => array("DataLife Engine", "/engine/", "DataLife Engine (http://dle-news.ru)", "index.php?do=lostpassword", "/engine/ajax/dle_ajax.js","/engine/opensearch.php","/index.php?do=feedback","/index.php?do=rules","/?do=lastcomments"),	
+                 "DataLife Engine" => array("DataLife Engine", "DataLife Engine (http://dle-news.ru)", "index.php?do=lostpassword", "/engine/ajax/dle_ajax.js","/engine/opensearch.php","/index.php?do=feedback","/index.php?do=rules","/?do=lastcomments"),	
                 "Discuz!</title>" => array('- Powered by Discuz!</title>','meta name="generator" content="Discuz!','meta name="author" content="Discuz! Team and Comsenz UI Team"','<p>Powered by <b>Discuz!</b>','div id="discuz_bad_','Powered by <strong><a href="http://www.discuz.net"',"discuz_uid = '0'"),	
                 "Django CMS" => array('meta name="generator" content="Django-CMS'),	
                 "Drupal" => array("Drupal.settings","Drupal 7 (http://drupal.org)","misc\/drupal.js","drupal_alter_by_ref","/sites/default/files/css/css_","/sites/all/files/css/css_",'text/javascript" src="/misc/drupal.js'),	
@@ -684,6 +684,7 @@ function checkerstart() {
 }
 //получить содержимое страницы
 function getpage($nadres){
+	$user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$nadres);
 	curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
@@ -695,9 +696,9 @@ function getpage($nadres){
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
-	$pagemeta = curl_exec($ch);
+	$page = curl_exec($ch);
 	curl_close($ch);
-	return $pagemeta;
+	return $page;
 }
 
 function erase_all() { //чистим за собой
