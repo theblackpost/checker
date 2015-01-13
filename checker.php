@@ -5,8 +5,8 @@
 </head>
 <body>
 <?php
-echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150112</h1>';
-// php_value memory_limit 192M можно добавить в htaccess если мало при проверке showmemory
+echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150113</h1>';
+// php_value memory_limit 192M можно добавить в .htaccess если мало при проверке showmemory
 
 
 #################################################################################################
@@ -22,13 +22,14 @@ echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_S
 
 setstart(); //отображение ошибок, задаем кодировку страницы
 filesBK(); //!!!  ВАЖНО  !!! тут закоментировать, если не работает при ошибке создания backup htaccess + ОБЯЗАТЕЛЬНО в самом низу erase_all();
+php_get_version(); //Проверяем версию PHP
 cms_curl_check(); //проверка CMS
 toolza_curl_check(); //проверка стоит ли тулза
 ReplaceSystemVars(); //заменяем системные переменные
-diffinfo(); //инфо ns-записи, path to file, phpversion
+diffinfo(); //инфо ns-записи, path to file
 FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
-memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - ставим  php_value memory_limit 192M или кратно выше в .htaccess в начало
+memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - можно поставить  php_value memory_limit 192M или кратно выше в .htaccess в начало
 shutdown(); //если showmemory показывает Error - продолжаем с checkerstart(); и завершаем erase_all();
 showmemory();	// проверка memory после index.php 
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
@@ -100,9 +101,12 @@ function filesBK() {
 		else echo ('<li style="color:#993300">file index.htm is not exist</li>');
 		
 	echo '</ul>';
+}
+
+function php_get_version(){
 	$phpversion = phpversion(); //версия PHP
 	if (preg_match('|^4.*|',$phpversion)){
-		echo "<br><b>PHP Version: <span style='color:red'>".phpversion()."<br>Need 5+ PHP version for normal toolza working</span></b><br><br>";
+		echo "<br><b>PHP Version: <span style='color:red'>".phpversion()."<br>it's n­ecessary to have 5+ PHP version for correct toolza working</span></b><br><br>";
 	} else echo "<br><b>PHP Version:  <span style='color:green'>".phpversion()."</span></b><br>";
 }
 
@@ -156,10 +160,12 @@ function curl_redir_exec($ch) {
 }
 
 function grab($site) {
-		if(mb_detect_encoding($site) != "ASCII"){ //если сайт в кириллице переводим в punycode
-			include("http://xtoolza.ru/q/cms/idna_convert.class.php");
-			$IDN = new idna_convert(array('idn_version' => '2008'));
-			$site=$IDN->encode($site);
+		if (function_exists('mb_detect_encoding')){
+			if(mb_detect_encoding($site) != "ASCII"){ //если сайт в кириллице переводим в punycode
+				include("http://xtoolza.ru/q/cms/idna_convert.class.php");
+				$IDN = new idna_convert(array('idn_version' => '2008'));
+				$site=$IDN->encode($site);
+			}
 		}
         $ch = curl_init();
 		$user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36";
@@ -696,23 +702,27 @@ function getpage($nadres){
 
 function erase_all() { //чистим за собой
 
-		$row_number = 0; //Удалим 1 строку из .htaccess (rewriteengine on)
-		$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив 
-		for($i = 0; $i < sizeof($file); $i++)
-		if($i == $row_number) unset($file[$i]);
-		$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
-		fputs($fp, implode("", $file));
-		fclose($fp);
-		echo ".htaccess line \"RewriteEngine On\" deleted <br/>";
+$file = file_get_contents($_SERVER['DOCUMENT_ROOT']."/.htaccess"); 
 
-		$row_number = 0; //Удалим 2 строку из .htaccess ещё раз - (rewriterule testFirst to testSecond) 
-		$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив
-		for($i = 0; $i < sizeof($file); $i++)
-		if($i == $row_number) unset($file[$i]);
-		$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
-		fputs($fp, implode("", $file));
-		fclose($fp);
-		echo ".htaccess line \"RewriteRule testFirst.html /testSecond.html [L,R=301]\" deleted <br>"; 
+		if (preg_match('|.*testFirst.html|ism',$file)){ //только, если в .htaccess найдено testFirst.html
+			$row_number = 0; //Удалим 1 строку из .htaccess (rewriteengine on)
+			$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив 
+			for($i = 0; $i < sizeof($file); $i++)
+			if($i == $row_number) unset($file[$i]);
+			$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
+			fputs($fp, implode("", $file));
+			fclose($fp);
+			echo ".htaccess line \"RewriteEngine On\" deleted <br/>";
+
+			$row_number = 0; //Удалим 2 строку из .htaccess ещё раз - (rewriterule testFirst to testSecond) 
+			$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив
+			for($i = 0; $i < sizeof($file); $i++)
+			if($i == $row_number) unset($file[$i]);
+			$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
+			fputs($fp, implode("", $file));
+			fclose($fp);
+			echo ".htaccess line \"RewriteRule testFirst.html /testSecond.html [L,R=301]\" deleted <br>"; 
+		} else echo 'Строки редиректов не найдены в .htaccess';
 		
 		
 		$path = $_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74';
