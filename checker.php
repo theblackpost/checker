@@ -73,28 +73,40 @@ function filesBK() {
 	}
 	
 	if (file_exists('.htaccess')) {
-		if (copy (".htaccess", ".htaccess_checker_autobackup")) {
+		$file = ".htaccess";
+		$newfile = ".htaccess_checker_autobackup";
+		$newfile = chmod($newfile,0777);
+		if (copy ($file, $newfile)) {
 			echo '<li>.htaccess backup created</li>';}
 			else exit ('<li style="color:red">cant create .htaccess backup</li>');
 		}
 		else echo ('<li style="color:#993300">file .htaccess is not exist</li>');
 	
 	if (file_exists('index.php')) {
-		if (copy ("index.php", "index.php_checker_autobackup")) {
+		$file = "index.php";
+		$newfile = "index.php_checker_autobackup";
+		$newfile = chmod($newfile,0777);
+		if (copy ($file, $newfile)) {
 			echo '<li>index.php backup created</li>';}
 			else exit ('<li style="color:red">cant create index.php backup</li>');
 		}
 		else echo ('<li style="color:#993300">file index.php is not exist</li>');
 	
 	if (file_exists('index.html')) {
-		if (copy ("index.html", "index.html_checker_autobackup")) {
+		$file = "index.html";
+		$newfile = "index.html_checker_autobackup";
+		$newfile = chmod($newfile,0777);
+		if (copy ($file, $newfile)) {
 			echo '<li>index.html backup created</li>';}
 			else exit ('<li style="color:red">cant create index.html backup</li>');
 		}
 		else echo ('<li style="color:#993300">file index.html is not exist</li>');
 		
 	if (file_exists('index.htm')) {
-		if (copy ("index.htm", "index.htm_checker_autobackup")) {
+		$file = "index.htm";
+		$newfile = "index.htm_checker_autobackup";
+		$newfile = chmod($newfile,0777);
+		if (copy ($file, $newfile)) {
 			echo '<li>index.htm backup created</li>';}
 			else exit ('<li style="color:red">cant create index.htm backup</li>');
 		}
@@ -280,6 +292,7 @@ function check($html) {
                 "Simpla CMS" => array("design/default/css/main.css","design/default/images/favicon.ico","tooltip='section' section_id="),	
                 "Simple Machines Forum" => array('<a href="http://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" class="new_win">Powered by SMF</a>','alt="Simple Machines Forum" title="Simple Machines Forum"','a href="http://www.simplemachines.org" title="Simple Machines"','title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>'),	
                 "SiteDNK" => array('http://company.nn.ru/sitednk/" target="_blank"><img src="/img/sdnk.gif"'),	
+                "SiteEdit" => array('meta name="generator" content="CMS EDGESTILE SiteEdit"','Сайт разработан и работает на CMS SiteEdit'),	
 				"Shop2You" => array('href="http://www.shop2you.ru/" target=_blank>Создание интернет-магазина</A>','href="http://www.shop2you.ru/" target=_blank>Создание интернет-магазина</a>','Создание сайта: Александр Фролов, <a href="http://www.shop2you.ru/"','A href="http://www.shop2you.ru/" target=_blank>Услуги по созданию интернет-магазинов</A>: Александр Фролов','href="http://www.shop2you.ru/" target=_blank>Создание интернет-магазина</A>: Александр Фролов'),	
 				"ShopOS" => array('meta name="generator" content="(c) by ShopOS , http://www.shopos.ru"','Telerik.Sitefinity.Services.Search.Web.UI.Public.SearchBox'),	
                 "Skynell SaaS" => array('<meta property="og:image" content="http://skynell.com"/>','href="http://skynell.com/promo/shop.php" class','href="http://skynell.com/promo/crm.php','href="http://skynell.com/company/','skynell.biz" class="theme_show_logo'),
@@ -295,7 +308,7 @@ function check($html) {
                 "Tumblr" => array('arning: Never enter your Tumblr password unless \u201chttps://www.tumblr.com/login','background-image: url(http://static.tumblr.com','href="android-app://com.tumblr/tumblr/','BEGIN TUMBLR FACEBOOK OPENGRAPH TAGS'),	
                 "TypePad" => array('meta name="generator" content="http://www.typepad.com/"','application/rsd+xml" title="RSD" href="http://www.typepad.com'),	
                 "TYPO 3" => array("This website is powered by TYPO3","typo3temp/"),	
-                "Twilight CMS" => array('<A HREF="http://www.twl.ru" target="_blank" >Система управления сайтом TWL CMS</A>','<link rel="stylesheet" href="Sites/','<link rel="stylesheet" href="/Sites/'),	
+                "Twilight CMS" => array('<A HREF="http://www.twl.ru" target="_blank" >Система управления сайтом TWL CMS</A>','<link rel="stylesheet" href="Sites/','<link rel="stylesheet" href="/Sites/','<link rel="stylesheet" href="/Sites/'),	
                 "uCoz" => array("cms-index-index","U1BFOOTER1Z","U1DRIGHTER1Z","U1CLEFTER1","U1AHEADER1Z","U1TRAKA1Z","U1YANDEX1Z"),	
                 "Umbraco" => array('xmlns:umbraco.library="urn:umbraco.library','/umbraco/imageGen.ashx','uComponents: Multipicker','umbraco:Item field=','umbraco:macro alias='),	
                 "UMI CMS" => array('xmlns:umi="http://www.umi-cms.ru/',"umi:element-id=", "umi:field-name=","umi:method=", "umi:module=",'<!-- Подключаем title, description и keywords -->'),	
