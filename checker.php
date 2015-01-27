@@ -62,7 +62,11 @@ function setstart() {
 function filesBK() {
 	echo '<b>Checker BackUps:</b><br>';
 	echo '<ul>';
-	$htaccessfile = ".htaccess";
+
+	$htaccessfile = '.htaccess';
+	$htcontent = file_get_contents($htaccessfile);
+	$htbackfile = ".htaccess_checker_autobackup";	
+
 	if (!file_exists($htaccessfile)) {
 		$htaccesswrite = fopen($htaccessfile, "w");
 		fwrite($htaccesswrite, "#.htaccess file");
@@ -73,40 +77,40 @@ function filesBK() {
 	}
 	
 	if (file_exists('.htaccess')) {
-		$file = ".htaccess";
-		$newfile = ".htaccess_checker_autobackup";
-		$newfile = chmod($newfile,0777);
-		if (copy ($file, $newfile)) {
-			echo '<li>.htaccess backup created</li>';}
-			else exit ('<li style="color:red">cant create .htaccess backup</li>');
+		$htaccessfile = '.htaccess';
+		$htcontent = file_get_contents($htaccessfile);
+		$htbackfile = ".htaccess_checker_autobackup";
+		if (file_put_contents($htbackfile, $htcontent)) {
+			echo '<li>.htaccess backup created</li>';
+			} else exit ('<li style="color:red">cant create .htaccess backup</li>');
 		}
 		else echo ('<li style="color:#993300">file .htaccess is not exist</li>');
 	
 	if (file_exists('index.php')) {
-		$file = "index.php";
-		$newfile = "index.php_checker_autobackup";
-		$newfile = chmod($newfile,0777);
-		if (copy ($file, $newfile)) {
+		$indexPHPfile = 'index.php';
+		$indexPHPcont = file_get_contents($indexPHPfile);
+		$indexphpbackfile = "index.php_checker_autobackup";
+		if (file_put_contents($indexphpbackfile, $indexPHPcont)) {
 			echo '<li>index.php backup created</li>';}
 			else exit ('<li style="color:red">cant create index.php backup</li>');
 		}
 		else echo ('<li style="color:#993300">file index.php is not exist</li>');
 	
 	if (file_exists('index.html')) {
-		$file = "index.html";
-		$newfile = "index.html_checker_autobackup";
-		$newfile = chmod($newfile,0777);
-		if (copy ($file, $newfile)) {
+		$indexHTMLfile = 'index.html';
+		$indexHTMLcont = file_get_contents($indexHTMLfile);
+		$indexhtmlbackfile = "index.html_checker_autobackup";
+		if (file_put_contents ($indexhtmlbackfile, $indexHTMLcont)) {
 			echo '<li>index.html backup created</li>';}
 			else exit ('<li style="color:red">cant create index.html backup</li>');
 		}
 		else echo ('<li style="color:#993300">file index.html is not exist</li>');
 		
 	if (file_exists('index.htm')) {
-		$file = "index.htm";
-		$newfile = "index.htm_checker_autobackup";
-		$newfile = chmod($newfile,0777);
-		if (copy ($file, $newfile)) {
+	$indexHTMfile = 'index.htm';
+	$indexHTMcont = file_get_contents($indexHTMfile);
+	$indexhtmbackfile = "index.htm_checker_autobackup";
+		if (file_put_contents ($indexhtmbackfile, $indexHTMcont)) {
 			echo '<li>index.htm backup created</li>';}
 			else exit ('<li style="color:red">cant create index.htm backup</li>');
 		}
