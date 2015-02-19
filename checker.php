@@ -48,6 +48,18 @@ erase_all(); //стираем за собой все временные файл
 
 ############     сами функции       ###############
 
+
+//допилить, оттестить на promo-banner.ru
+function globrecurse(){
+    foreach (glob("/var/www/q/logs/*.txt") as $filename) { //здесь сделать переменную и путь до /testFolderUniqueName. Проверять файл php там.
+        if ($filename == false) {
+            echo ' is false';
+        } else echo 'array';
+    }
+}
+//globrecurse();
+
+
 function shutdown() {
 register_shutdown_function('checkerstart'); 
 register_shutdown_function('erase_all'); 
