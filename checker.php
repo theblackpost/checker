@@ -484,6 +484,7 @@ function diffinfo(){
 		echo '<tr><td>MX-record: </td><td>'. ($dns_arr[0]['target']).'</td></tr></table>';
 	}
 	echo '<p> Path to file: '.$_SERVER["SCRIPT_FILENAME"].'</p>';
+         echo '<p> OS: ' . PHP_OS . '</p>';
 }
 
 
