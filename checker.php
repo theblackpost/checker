@@ -55,9 +55,14 @@ register_shutdown_function('erase_all');
 }
 
 function setstart() {
-	error_reporting( E_ERROR ); //отображаем только значительные ошибки
-	ini_set('display_errors', 1); //не показываем ошибки
-	header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
+    error_reporting( E_ERROR ); //отображаем только значительные ошибки
+    ini_set('display_errors', 1); //не показываем ошибки
+    header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
+    header("Expires: Tue, 1 Jul 2003 05:00:00 GMT");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+    header("Pragma: no-cache");
+    set_time_limit(6000);
 }
 
 function filesBK() {
@@ -487,7 +492,8 @@ function diffinfo(){
 		echo '<tr><td>MX-record: </td><td>'. ($dns_arr[0]['target']).'</td></tr></table>';
 	}
 	echo '<p> Path to file: '.$_SERVER["SCRIPT_FILENAME"].'</p>';
-         echo '<p> OS: ' . PHP_OS . '</p>';
+    echo '<p> OS: ' . PHP_OS . '</p>';
+    echo 'default file rights:'.substr(sprintf('%o',fileperms($_SERVER['DOCUMENT_ROOT'].'/checker.php')),-4).'<br />';
 }
 
 
