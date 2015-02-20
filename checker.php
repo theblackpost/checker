@@ -512,6 +512,8 @@ function showmemory(){
 	if (file_exists($_mainFileName))	{
 		ob_end_flush(); 
 		ob_start();
+        error_reporting(0);
+        ini_set("display_errors","0");
 		@include_once $_mainFileName;
 		$file = ob_get_contents();
 		$memory = memory_get_usage(true);
@@ -521,8 +523,9 @@ function showmemory(){
 	elseif (file_exists($_htmlFileName))	{
 		ob_end_flush(); 
 		ob_start();
-		@include_once $_htmlFileName; 
-		error_reporting( E_ERROR ); 
+		@include_once $_htmlFileName;
+        error_reporting(0);
+        ini_set("display_errors","0");
 		$file = ob_get_contents();
 		$memory = memory_get_usage(true);
 		ob_end_clean();
@@ -531,10 +534,13 @@ function showmemory(){
 	elseif (file_exists($_htmFileName))	{
 		ob_end_flush(); 
 		ob_start();
+        error_reporting(0);
+        ini_set("display_errors","0");
 		@include_once $_htmFileName; 
 		$file = ob_get_contents();
 		$memory = memory_get_usage(true);
 		ob_end_clean();
+
 		echo "<br />Memory after Index.htm (byte): " . $memory . " = " . round($memory/1048576,2) . " Mb" . "<br> (Need more than <b>20 Mb</b> for toolza correct work: Memory Limit - Memory after Index.htm)<br>";
 	}
 	
