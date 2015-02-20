@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
+
+
 <title>Checker.php</title>
 <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -58,7 +61,7 @@ function setstart() {
     error_reporting( E_ERROR ); //отображаем только значительные ошибки
     ini_set('display_errors', 1); //не показываем ошибки
     header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
-    header("Expires: Tue, 1 Jul 2003 05:00:00 GMT");
+    header("Expires: Tue, 1 Jul 2003 05:00:00 GMT"); //ниже нафиг кэш
     header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
@@ -502,7 +505,7 @@ function memorylimit(){
 }
 
 function showmemory(){
-	$_mainFileName = "index.php";
+   	$_mainFileName = "index.php";
 	$_htmlFileName = "index.html";
 	$_htmFileName = "index.htm";
 		// echo "<br />Memory before Index.php (byte): " . memory_get_usage(true) . " = " . round(memory_get_usage(true)/1048576,2) . " Mb";
@@ -536,7 +539,7 @@ function showmemory(){
 	}
 	
 	else echo '<br>index.php, index.html or index.htm not found. Cant check memory usage';
-}
+ }
 
 
 
@@ -546,14 +549,16 @@ function FileCreateRead() {
 		if (!mkdir($structure, 0777, true)) 
 		echo "Cant create directory...<br>";
 		else
-		chmod("./test-123-folderUniquename74", 0777); 
+		chmod("./test-123-folderUniquename74", 0777);
 		//создаем файл info.php, наполняем его
 		$intfile = fopen("./test-123-folderUniquename74/info.php","w+");
 		$textinfile = "<?php echo \"<b>ok</b>\"; ?>";
-		if (fwrite($intfile,$textinfile))
-		echo "file created: ";
-		else
-		echo "file created: <span style='color:red'><b>false</b></span>";
+		if (fwrite($intfile,$textinfile)) {
+		    echo "file created: ";
+        }
+		else {
+		    echo "file created: <span style='color:red'><b>false</b></span>";
+        }
 		fclose($intfile);
 		include './test-123-folderUniquename74/info.php'; 	//читаем файл
         echo '<br />script created file rights:'.substr(sprintf('%o',fileperms($_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74/info.php')),-4).'<br />';
@@ -598,9 +603,9 @@ class Checker {
         if($this->Exists('fsockopen') && $this->Exists('fwrite')){
             $this->Log('fsockopen-fwrite', 'ok');
 			if ($this->Exists('curl_version')){ //curl version
-			$curlv = curl_version();
-			$curlver = $curlv['version'];
-			$this->Log("cURL version", "$curlver"); 
+			    $curlv = curl_version();
+			    $curlver = $curlv['version'];
+			    $this->Log("cURL version", "$curlver");
 			} else $this->Log('cURL version','not found');
             $this->_Http = new Socket();
         } elseif($this->Exists('curl_init') && $this->Exists('curl_exec')){
@@ -624,16 +629,18 @@ class Checker {
 
         $this->Log('ServerSoftwareExt', $_SERVER['SERVER_SOFTWARE']);
         if($this->Exists('apache_get_modules')){
-            echo "<br><pre>";
-            print_r(apache_get_modules());
-            echo "<br></pre>";
+        echo '<br/><details><summary><span style="cursor: pointer;"><b>Apache Modules:</b></summary><pre>';
+           print_r(apache_get_modules());
+           echo '<br/></pre></details> ';
         }
 		
 		$this->ShowPhpinfo();
     }
 	
 	function ShowPhpinfo(){
+        echo '<br/><details><summary><span style="cursor: pointer;"><b>PHPInfo():</b></summary>';
 		phpinfo();
+        echo '<br/></details>';
 	}
 	
     function stripos($k, $s){
