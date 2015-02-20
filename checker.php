@@ -128,8 +128,8 @@ function filesBK() {
 function php_get_version(){
 	$phpversion = phpversion(); //версия PHP
 	if (preg_match('|^4.*|',$phpversion)){
-		echo "<br><b>PHP Version: <span style='color:red'>".phpversion()."<br>it's n­ecessary to have 5+ PHP version for correct toolza working</span></b><br><br>";
-	} else echo "<br><b>PHP Version:  <span style='color:green'>".phpversion()."</span></b><br>";
+		echo "<b>PHP Version: <span style='color:red'>".phpversion()."<br>it's n­ecessary to have 5+ PHP version for correct toolza working</span></b><br><br>";
+	} else echo "<b>PHP Version:  <span style='color:green'>".phpversion()."</span></b><br>";
 }
 
 //если curl есть, тогда проверяем ЦМС и наличие тулзы
@@ -486,13 +486,13 @@ function diffinfo(){
 	$sitens = $_SERVER["HTTP_HOST"];
 	if (function_exists('dns_get_record')) {
 		$dns_arr = dns_get_record($sitens,DNS_NS);
-		echo '<br><table><tr><td>NS-record 1: </td><td>'. ($dns_arr[0]['target']).'</td></tr>';
+		echo '<table><tr><td>NS-record 1: </td><td>'. ($dns_arr[0]['target']).'</td></tr>';
 		echo '<tr><td>NS-record 2: </td><td>'. ($dns_arr[1]['target']).'</td></tr>';
 		$dns_arr2 = dns_get_record($sitens,DNS_MX);
 		echo '<tr><td>MX-record: </td><td>'. ($dns_arr[0]['target']).'</td></tr></table>';
 	}
 	echo '<p> Path to file: '.$_SERVER["SCRIPT_FILENAME"].'</p>';
-    echo '<p> OS: ' . PHP_OS . '</p>';
+    echo 'OS: ' . PHP_OS . '<br />';
     echo 'default file rights:'.substr(sprintf('%o',fileperms($_SERVER['DOCUMENT_ROOT'].'/checker.php')),-4).'<br />';
 }
 
