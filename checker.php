@@ -556,6 +556,7 @@ function FileCreateRead() {
 		echo "file created: <span style='color:red'><b>false</b></span>";
 		fclose($intfile);
 		include './test-123-folderUniquename74/info.php'; 	//читаем файл
+        echo '<br />script created file rights:'.substr(sprintf('%o',fileperms($_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74/info.php')),-4).'<br />';
         //globcheck(); //проверяем включена ли ф-ция glob'ального обхода каталогов.
 }
 
