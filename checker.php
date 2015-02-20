@@ -31,7 +31,7 @@ FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
 memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - можно поставить  php_value memory_limit 192M или кратно выше в .htaccess в начало
 shutdown(); //если showmemory показывает Error - продолжаем с checkerstart(); и завершаем erase_all();
-showmemory();	// проверка memory после index.php 
+showmemory();	// проверка memory после index.php
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
@@ -46,18 +46,7 @@ erase_all(); //стираем за собой все временные файл
 
 
 
-############     сами функции       ###############
-
-
-//допилить, оттестить на promo-banner.ru
-function globrecurse(){
-    foreach (glob("/var/www/q/logs/*.txt") as $filename) { //здесь сделать переменную и путь до /testFolderUniqueName. Проверять файл php там.
-        if ($filename == false) {
-            echo ' is false';
-        } else echo 'array';
-    }
-}
-//globrecurse();
+#############     сами функции       ###############
 
 
 function shutdown() {
@@ -481,7 +470,9 @@ $_fileNameChecker = "checker.php";
 
 function ReplaceSystemVars(){
 	foreach($_SERVER as $k=>$v){
-		$_SERVER[$k] = str_replace($_fileNameChecker, $_mainFileName, $_SERVER[$k]);
+        if (!empty($_fileNameChecker)||!empty($_mainFileName)) {
+            $_SERVER[$k] = str_replace($_fileNameChecker, $_mainFileName, $_SERVER[$k]);
+        }
 	}
 }
 function diffinfo(){
@@ -558,10 +549,18 @@ function FileCreateRead() {
 		else
 		echo "file created: <span style='color:red'><b>false</b></span>";
 		fclose($intfile);
-		//читаем файл
-		include './test-123-folderUniquename74/info.php';
+		include './test-123-folderUniquename74/info.php'; 	//читаем файл
+        //globcheck(); //проверяем включена ли ф-ция glob'ального обхода каталогов.
 }
 
+function globcheck(){
+    foreach (glob($_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74/*.php') as $file) {
+        //echo $filename . '<br>';
+        if (empty($file)) {
+            echo "<br />glob is false<br />";
+        } else echo "<br />glob is ok: $file<br />";
+    }
+}
 
 // checker other functions
 class Checker {
@@ -736,7 +735,9 @@ class NetContext{
         $responseMeta = stream_get_meta_data($stream);
         fclose($stream);
 
-        $responseHeaders;
+        if (!empty($responseHeaders)) {
+            $responseHeaders;
+        }
         if(isset($responseMeta['wrapper_data']['headers'])){
             $responseHeaders = $responseMeta['wrapper_data']['headers'];
         } else {
