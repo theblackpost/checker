@@ -569,6 +569,8 @@ function FileCreateRead() {
 		include './test-123-folderUniquename74/info.php'; 	//читаем файл
         echo '<br />script created file rights:'.substr(sprintf('%o',fileperms($_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74/info.php')),-4).'<br />';
         //globcheck(); //проверяем включена ли ф-ция glob'ального обхода каталогов.
+        //echo 'Значение вызова fsockopen:'; var_dump(is_callable('fsockopen')); echo '<br \>';//можно ли вызвать сокеты в кач-ве переменной
+
 }
 
 function globcheck(){
