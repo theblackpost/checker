@@ -246,7 +246,7 @@ function check($html) {
                 "CS Cart" => array("/skins/basic/customer/addons/","/skins/basic/customer/images/icons/favicon.ico","/auth-loginform?return_url=index.php","/index.php?dispatch=auth.recover_password","cm-popup-box hidden","cm-popup-switch hand cart-list-icon","cart-list hidden cm-popup-box cm-smart-position","index.php?dispatch=checkout.cart","cm-notification-container","/index.php?dispatch=pages.view&page_id="),	
                 "Danneo CMS" => array("Danneo Русская CMS", 'content="CMS Danneo','META NAME="GENERATOR" CONTENT="Danneo CMS','meta name="generator" content="CMS Danneo'),	
                 "Demandware" => array("Demandware Analytics code", 'shortcut icon" type="image/png" href="http://demandware.edgesuite.net/','link rel="stylesheet" href="http://demandware.edgesuite.net/','img src="http://demandware.edgesuite.net/'),	
-                 "DataLife Engine" => array("DataLife Engine Copyright", "index.php?do=lostpassword", "/engine/ajax/dle_ajax.js","/engine/opensearch.php","/index.php?do=feedback","/index.php?do=rules","/?do=lastcomments",'meta name="generator" content="DataLife Engine'),		
+                 "DataLife Engine" => array("DataLife Engine Copyright", "index.php?do=lostpassword", "/engine/ajax/dle_ajax.js","engine/opensearch.php","/index.php?do=feedback","/index.php?do=rules","/?do=lastcomments",'meta name="generator" content="DataLife Engine','/engine/editor/css/default.css','/engine/editor/scripts/webfont.js'),
                  "diafan.CMS" => array('http://www.diafan.ru/'),	
                 "Discuz!" => array('- Powered by Discuz!</title>','meta name="generator" content="Discuz!','meta name="author" content="Discuz! Team and Comsenz UI Team"','<p>Powered by <b>Discuz!</b>','div id="discuz_bad_','Powered by <strong><a href="http://www.discuz.net"',"discuz_uid = '0'"),	
                 "Divolta CMS" => array('Разработка сайта <a href="http://divolta.com.ua'),	
@@ -373,7 +373,8 @@ function check($html) {
                 "Squiz Matrix" => array('Running Squiz Matrix','Developed by Squiz'),	
                 "Squarespace" => array('itemscope itemtype="http://schema.org/Thing" class="squarespace-cameron"','http://static.squarespace.com/static/','Squarespace.afterBodyLoad(Y);','Squarespace.Constants.CORE_APPLICATION_DOMAIN = "squarespace.com"','div id="squarespace-powered"','alt="Powered by Squarespace"'),	
                 "SilverStripe" => array('meta name="generator" content="SilverStripe'),	
-                "Simpla CMS" => array("design/default/css/main.css","design/default/images/favicon.ico","tooltip='section' section_id=",'Slider_Simpla_Module'),	
+                "Simpla CMS" => array("design/default/css/main.css","design/default/images/favicon.ico","tooltip='section' section_id=",'Slider_Simpla_Module'),
+                "SimpleSite SaaS" => array('content="SimpleSite.com"','"text/css" href="http://css.simplesite.com/','"text/javascript" src="http://css.simplesite.com/','Сайт создан с помощью SimpleSite'),
                 "Simple Machines Forum" => array('<a href="http://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" class="new_win">Powered by SMF</a>','alt="Simple Machines Forum" title="Simple Machines Forum"','a href="http://www.simplemachines.org" title="Simple Machines"','title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>','gaq.push(["_setDomainName", "simplemachines.org"'),	
                 "SiteDNK" => array('http://company.nn.ru/sitednk/" target="_blank"><img src="/img/sdnk.gif"'),	
                 "SiteEdit" => array('meta name="generator" content="CMS EDGESTILE SiteEdit"','Сайт разработан и работает на CMS SiteEdit'),	
@@ -429,7 +430,8 @@ function check($html) {
                 "Yu CMS" => array('(new Image).src="http://store.yahoo.net/cgi-bin/refsd?e='),
                 "Zen Cart" => array('meta name="generator" content="shopping cart program by Zen Cart','meta name="author" content="The Zen Cart&trade; Team and others"','greybox 1: greybox for zencart',"n&amp;zenid="),
                 "ZMS" => array('generator" content="ZMS http://www.zms-publishing.com"'),
-                "Просто Сайт CMS" => array('<a title="создание сайтов" href="http://www.yalstudio.ru/services/corporativ/">создание сайтов</a> — Студия ЯЛ','http://www.yalstudio.ru/services/complex/" title="продвижение сайтов','title="продвижение сайтов" href="http://www.yalstudio.ru/services/complex/">Продвижение сайтов','<a href="http://www.yalstudio.ru/services/complex/">продвижение сайтов</a>')
+                "Просто Сайт CMS" => array('<a title="создание сайтов" href="http://www.yalstudio.ru/services/corporativ/">создание сайтов</a> — Студия ЯЛ','http://www.yalstudio.ru/services/complex/" title="продвижение сайтов','title="продвижение сайтов" href="http://www.yalstudio.ru/services/complex/">Продвижение сайтов','<a href="http://www.yalstudio.ru/services/complex/">продвижение сайтов</a>'),
+                "Мультимедиа компания «КСК» CMS" => array('Сделано в КСК','rev="made" href="http://www.cural.ru/"','link rev="cural" href=','name="author" content="http://www.cural.ru/')
         );
         foreach ($cms as $name => $rules) {
             $c = count($rules);
