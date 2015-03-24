@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
 <title>Checker.php</title>
 <meta name="robots" content="noindex,nofollow" />
 </head>
@@ -20,9 +18,6 @@ echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_S
 */																							   ##
 #################################################################################################
 
-
-
-
 setstart(); //отображение ошибок, задаем кодировку страницы
 filesBK(); //!!!  ВАЖНО  !!! тут закоментировать, если не работает при ошибке создания backup htaccess + ОБЯЗАТЕЛЬНО в самом низу erase_all();
 php_get_version(); //Проверяем версию PHP
@@ -37,14 +32,6 @@ shutdown(); //если showmemory показывает Error - продолжа�
 showmemory();	// проверка memory после index.php
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
-
-
-
-
-
-
-
-
 
 
 
@@ -399,7 +386,7 @@ function check($html) {
                 "TypePad" => array('meta name="generator" content="http://www.typepad.com/"','application/rsd+xml" title="RSD" href="http://www.typepad.com'),	
                 "TYPO 3" => array("This website is powered by TYPO3","typo3temp/",'meta name="generator" content="TYPO3','src="/typo3conf/','--TYPO3SEARCH_end'),	
                 "Twilight CMS" => array('<A HREF="http://www.twl.ru" target="_blank" >Система управления сайтом TWL CMS</A>','<link rel="stylesheet" href="Sites/','<link rel="stylesheet" href="/Sites/','<link rel="stylesheet" href="/Sites/','<img src="/Sites/'),	
-                "uCoz" => array("cms-index-index","U1BFOOTER1Z","U1DRIGHTER1Z","U1CLEFTER1","U1AHEADER1Z","U1TRAKA1Z","U1YANDEX1Z"),	
+                "uCoz SaaS" => array("cms-index-index","U1BFOOTER1Z","U1DRIGHTER1Z","U1CLEFTER1","U1AHEADER1Z","U1TRAKA1Z","U1YANDEX1Z"),	
                 "UkroCMS" => array('target="_blank" href="http://ukro.in.ua">UkroCMS</a>'),	
                 "Umbraco" => array('xmlns:umbraco.library="urn:umbraco.library','/umbraco/imageGen.ashx','uComponents: Multipicker','umbraco:Item field=','umbraco:macro alias=','html xmlns:umbraco="http://umbraco.org'),	
                 "UMI CMS" => array('xmlns:umi="http://www.umi-cms.ru/',"umi:element-id=", "umi:field-name=","umi:method=", "umi:module=",'<!-- Подключаем title, description и keywords -->'),	
