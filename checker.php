@@ -196,7 +196,7 @@ function grab($site) {
 }
 
 function check($html) {
-        $cms = array(
+	$cms = array(
 				"3dcart" => array('Software by <a href="http://www.3dcart.com">3dcart</a>','!--START: 3dcart stats--','!--END: 3dcart stats--'),
 				"a5 SaaS" => array('!-- siteByName_','img src="/img/zones/a5.ru/site_copyright.png','Создано на конструкторе сайтов - A5.ru'),	
                 "ABO CMS" => array("Design and programming (for ABO.CMS)","ABO.CMS"),	
@@ -335,6 +335,7 @@ function check($html) {
                 "Shopium SaaS" => array('link rel="stylesheet" href="//cdn2.shopium.ua','meta property= content="http://cdn2.shopium.ua/','img src="//cdn2.shopium.ua','script type="text/javascript" src="//cdn1.shopium.ua'),
                 "Parallels Presence Builder" => array('meta name="generator" content="Parallels Presence Builder'),	
                 "Percussion CMS" => array('meta content="Percussion CM System" name="generator','meta name="generator" content="Percussion',"var evergageAccount = 'percussion"),	
+                "Perspektiva.CMS" => array("name='generator' content='Perspektiva.CMS'",'class="footer-perspektiva"'),	
                 "phpBB" => array("phpBB style name: prosilver", "The phpBB Group : 2006", "linked to www.phpbb.com. If you refuse","_phpbbprivmsg","Русская поддержка phpBB","below including the link to www.phpbb.com",'Движется на пхпББ'),	
                 "PHP-Fusion" => array("Powered by <noindex><a href='http://www.php-fusion.co.uk'>PHP-Fusion</a>","Powered by <a href='http://www.php-fusion.co.uk'>PHP-Fusion</a>","script src='infusions/","language='javascript' src='infusions/","background-image: url('infusions/","alt='PHP-Fusion' title='PHP-Fusion'","Powered by <a href='http://www.php-fusion.co.uk'"),	
                 "PHP Link Directory" => array('<a href="http://www.phplinkdirectory.com" title="PHP Link Directory">PHP Link Directory</a>','Powered By <a href="http://www.phplinkdirectory.com/">PHPLD</a>','meta name="generator" content="Internet Directory One Running on PHP Link Directory','href="/profile.php?mode=register" title="Register">Register to PHPLD</a>','<a href="http://www.phplinkdirectory.com" title="PHP Link Directory">PHP LD</a>'),	
