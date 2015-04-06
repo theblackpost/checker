@@ -626,7 +626,11 @@ class Checker {
             $this->Log('ServerSoftware', apache_get_version());
         }
 
-        $this->Log('ServerSoftwareExt', $_SERVER['SERVER_SOFTWARE']);
+		if (preg_match('/Apache/i',$_SERVER['SERVER_SOFTWARE'])) {
+			$this->Log('ServerSoftwareExt', '<span style="color:green">'.$_SERVER['SERVER_SOFTWARE'].'</span>');
+			} else {
+			$this->Log('ServerSoftwareExt', '<span style="color:red">'.$_SERVER['SERVER_SOFTWARE'].'</span>');
+			}
         if($this->Exists('apache_get_modules')){
         echo '<br/><details><summary><span style="cursor: pointer;"><b>Apache Modules:</b></summary><pre>';
            print_r(apache_get_modules());
