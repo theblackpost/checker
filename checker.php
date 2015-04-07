@@ -628,8 +628,10 @@ class Checker {
 
 		if (preg_match('/Apache/i',$_SERVER['SERVER_SOFTWARE'])) {
 			$this->Log('ServerSoftwareExt', '<span style="color:green">'.$_SERVER['SERVER_SOFTWARE'].'</span>');
+			} elseif (preg_match('/nginx/i',$_SERVER['SERVER_SOFTWARE'])) {
+			$this->Log('ServerSoftwareExt', '<span style="color:#5900B3">'.$_SERVER['SERVER_SOFTWARE'].'&nbsp;(need ssh to access toolza)</span>');
 			} else {
-			$this->Log('ServerSoftwareExt', '<span style="color:red">'.$_SERVER['SERVER_SOFTWARE'].'</span>');
+			$this->Log('ServerSoftwareExt', '<span style="color:red">'.$_SERVER['SERVER_SOFTWARE'].'</span>'); 
 			}
         if($this->Exists('apache_get_modules')){
         echo '<br/><details><summary><span style="cursor: pointer;"><b>Apache Modules:</b></summary><pre>';
