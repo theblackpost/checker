@@ -34,14 +34,12 @@ checkerstart(); //все оставшиеся проверки чекера (fop
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
 
-
-
 #############	 сами функции	   ###############
 
 
 function shutdown() {
-register_shutdown_function('checkerstart'); 
-register_shutdown_function('erase_all'); 
+	register_shutdown_function('checkerstart'); 
+	register_shutdown_function('erase_all'); 
 }
 
 function setstart() {
@@ -51,6 +49,7 @@ function setstart() {
 	header("Expires: Tue, 1 Jul 2003 05:00:00 GMT"); //ниже нафиг кэш
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	header("Cache-Control: no-store, no-cache, must-revalidate");
+	header("Cache-Control: post-check=0, pre-check=0", false); 
 	header("Pragma: no-cache");
 	set_time_limit(6000);
 }
@@ -78,7 +77,7 @@ function filesBK() {
 		$htbackfile = ".htaccess_checker_autobackup";
 		if (file_put_contents($htbackfile, $htcontent)) {
 			echo '<li>.htaccess backup created</li>';
-			} else exit ('<li style="color:red">cant create .htaccess backup</li>');
+			} else echo '<li style="color:red"><b>cant create .htaccess backup</b></li>';
 		}
 		else echo ('<li style="color:#993300">file .htaccess is not exist</li>');
 	
@@ -88,7 +87,7 @@ function filesBK() {
 		$indexphpbackfile = "index.php_checker_autobackup";
 		if (file_put_contents($indexphpbackfile, $indexPHPcont)) {
 			echo '<li>index.php backup created</li>';}
-			else exit ('<li style="color:red">cant create index.php backup</li>');
+			else echo '<li style="color:red"><b>cant create index.php backup</b></li>';
 		}
 		else echo ('<li style="color:#993300">file index.php is not exist</li>');
 	
@@ -98,7 +97,7 @@ function filesBK() {
 		$indexhtmlbackfile = "index.html_checker_autobackup";
 		if (file_put_contents ($indexhtmlbackfile, $indexHTMLcont)) {
 			echo '<li>index.html backup created</li>';}
-			else exit ('<li style="color:red">cant create index.html backup</li>');
+			else echo '<li style="color:red"><b>cant create index.html backup</b></li>';
 		}
 		else echo ('<li style="color:#993300">file index.html is not exist</li>');
 		
@@ -108,7 +107,7 @@ function filesBK() {
 	$indexhtmbackfile = "index.htm_checker_autobackup";
 		if (file_put_contents ($indexhtmbackfile, $indexHTMcont)) {
 			echo '<li>index.htm backup created</li>';}
-			else exit ('<li style="color:red">cant create index.htm backup</li>');
+			else echo '<li style="color:red"><b>cant create index.htm backup</b></li>';
 		}
 		else echo ('<li style="color:#993300">file index.htm is not exist</li>');
 		
@@ -174,7 +173,7 @@ function curl_redir_exec($ch) {
 function grab($site) {
 		if (function_exists('mb_detect_encoding')){
 			if(mb_detect_encoding($site) != "ASCII"){ //если сайт в кириллице переводим в punycode
-				include("http://xtoolza.ru/q/cms/idna_convert.class.php");
+				include("http://xtoolza.info/q/cms/idna_convert.class.php");
 				$IDN = new idna_convert(array('idn_version' => '2008'));
 				$site=$IDN->encode($site);
 			}
@@ -852,43 +851,39 @@ function getpage($nadres){
 function erase_all() { //чистим за собой
 
 $file = file_get_contents($_SERVER['DOCUMENT_ROOT']."/.htaccess"); 
+if (preg_match('|.*testFirst.html|ism',$file)){ //только, если в .htaccess найдено testFirst.html
+	$row_number = 0; //Удалим 1 строку из .htaccess (rewriteengine on)
+	$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив 
+	for($i = 0; $i < sizeof($file); $i++)
+	if($i == $row_number) unset($file[$i]);
+	$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
+	fputs($fp, implode("", $file));
+	fclose($fp);
+	echo ".htaccess line \"RewriteEngine On\" deleted <br/>";
 
-		if (preg_match('|.*testFirst.html|ism',$file)){ //только, если в .htaccess найдено testFirst.html
-			$row_number = 0; //Удалим 1 строку из .htaccess (rewriteengine on)
-			$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив 
-			for($i = 0; $i < sizeof($file); $i++)
-			if($i == $row_number) unset($file[$i]);
-			$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
-			fputs($fp, implode("", $file));
-			fclose($fp);
-			echo ".htaccess line \"RewriteEngine On\" deleted <br/>";
+	$row_number = 0; //Удалим 2 строку из .htaccess ещё раз - (rewriterule testFirst to testSecond) 
+	$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив
+	for($i = 0; $i < sizeof($file); $i++)
+	if($i == $row_number) unset($file[$i]);
+	$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
+	fputs($fp, implode("", $file));
+	fclose($fp);
+	echo ".htaccess line \"RewriteRule testFirst.html /testSecond.html [L,R=301]\" deleted <br>"; 
+} else echo 'Строки редиректов не найдены в .htaccess';
+$path = $_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74';
+unlink($path.'/info.php');
+rmdir($path);
+echo "Folder test-123-folderUniquename74 deleted<br />";
 
-			$row_number = 0; //Удалим 2 строку из .htaccess ещё раз - (rewriterule testFirst to testSecond) 
-			$file = file($_SERVER['DOCUMENT_ROOT']."/.htaccess"); // Считываем весь файл в массив
-			for($i = 0; $i < sizeof($file); $i++)
-			if($i == $row_number) unset($file[$i]);
-			$fp = fopen($_SERVER['DOCUMENT_ROOT']."/.htaccess", "w");
-			fputs($fp, implode("", $file));
-			fclose($fp);
-			echo ".htaccess line \"RewriteRule testFirst.html /testSecond.html [L,R=301]\" deleted <br>"; 
-		} else echo 'Строки редиректов не найдены в .htaccess';
-		
-		
-		$path = $_SERVER['DOCUMENT_ROOT'].'/test-123-folderUniquename74';
-		unlink($path.'/info.php');
-		rmdir($path);
-		echo "Folder test-123-folderUniquename74 deleted<br />";
-		
-		$files_root = array(
-			$_SERVER['DOCUMENT_ROOT'].'/testFirst.html',
-			$_SERVER['DOCUMENT_ROOT'].'/testSecond.html',
-			$_SERVER['DOCUMENT_ROOT'].'/checker.php'
-		);
-		foreach ($files_root as $file_root){
-			unlink($file_root);
-		}
-		echo 'files_root deleted <br>';
-		
+$files_root = array(
+	$_SERVER['DOCUMENT_ROOT'].'/testFirst.html',
+	$_SERVER['DOCUMENT_ROOT'].'/testSecond.html',
+	$_SERVER['DOCUMENT_ROOT'].'/checker.php'
+);
+foreach ($files_root as $file_root){
+	unlink($file_root);
+}
+echo 'files_root deleted <br>';
 }
 
 ?>
