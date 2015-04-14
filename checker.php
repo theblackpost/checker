@@ -46,7 +46,7 @@ register_shutdown_function('erase_all');
 
 function setstart() {
 	error_reporting( E_ERROR ); //отображаем только значительные ошибки
-	ini_set('display_errors', 1); //не показываем ошибки
+	ini_set('display_errors', 0); //не показываем ошибки
 	header('Content-Type: text/html; charset=utf-8'); //задаем кодировку страницы
 	header("Expires: Tue, 1 Jul 2003 05:00:00 GMT"); //ниже нафиг кэш
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
