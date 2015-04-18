@@ -6,15 +6,15 @@
 </head>
 <body>
 <?php
-echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150127</h1>';
+echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150418</h1>';
 // php_value memory_limit 192M можно добавить в .htaccess если мало при проверке showmemory
 
 
 #################################################################################################
-/*				  																		   ##
+/*				  																		 	  ##
 следующие несколько строк - это функции, отвечающие за проверку той или иной части сайта	   ##
 если на каком-то этапе проверка перестает работать или ведет себя не так, как ожидалось,	   ##
-соответствующий пункт необходимо закомментировать (добавить в начале строки символ # или //	##
+соответствующий пункт необходимо закомментировать (добавить в начале строки символ # или //		##
 */																							   ##
 #################################################################################################
 
@@ -28,13 +28,13 @@ diffinfo(); //инфо ns-записи, path to file
 FileCreateRead(); //создание папки
 modrewritecheck(); //проверяем включен ли mod_rewrite
 memorylimit(); // выводим memory_limit (если меньше 64 и есть проблемы с работой тулзы - можно поставить  php_value memory_limit 192M или кратно выше в .htaccess в начало
-shutdown(); //если showmemory показывает Error - продолжаем с checkerstart(); и завершаем erase_all();
-showmemory();	// проверка memory после index.php
+// shutdown(); //если showmemory показывает Error - продолжаем с checkerstart(); и завершаем erase_all();
+// showmemory();	// проверка memory после index.php
 checkerstart(); //все оставшиеся проверки чекера (fopen, cURL version, fsockopen, redirect, Software, modules, phpinfo)
 erase_all(); //стираем за собой все временные файлы, папки и т.п.
 
 
-#############	 сами функции	   ###############
+#############	 сами функции	  ###############
 
 
 function shutdown() {
