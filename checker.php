@@ -6,7 +6,7 @@
 </head>
 <body>
 <?php
-echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150418</h1>';
+echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_SERVER["HTTP_HOST"].'</a> checker. Ver. 2.0150423</h1>';
 // php_value memory_limit 192M можно добавить в .htaccess если мало при проверке showmemory
 
 
