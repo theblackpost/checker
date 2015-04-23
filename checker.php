@@ -20,7 +20,7 @@ echo '<h1> Site <a href="http://'.$_SERVER["HTTP_HOST"].'" target="_blank">'.$_S
 
 setstart(); //отображение ошибок, задаем кодировку страницы
 php_get_version(); //Проверяем версию PHP
-filesBK(); //!!!  ВАЖНО  !!! тут закоментировать, если не работает при ошибке создания backup htaccess + ОБЯЗАТЕЛЬНО в самом низу erase_all();
+filesBK(); //!!!  ВАЖНО  !!! тут закоментировать, если не работает при ошибке создания backup htaccess;
 cms_curl_check(); //проверка CMS
 toolza_curl_check(); //проверка стоит ли тулза
 ReplaceSystemVars(); //заменяем системные переменные
