@@ -629,6 +629,8 @@ class Checker {
 			$this->Log('ServerSoftwareExt', '<span style="color:green">'.$_SERVER['SERVER_SOFTWARE'].'</span>');
 			} elseif (preg_match('/nginx/i',$_SERVER['SERVER_SOFTWARE'])) {
 			$this->Log('ServerSoftwareExt', '<span style="color:#5900B3">'.$_SERVER['SERVER_SOFTWARE'].'&nbsp;(need ssh to access toolza)</span>');
+			} elseif (preg_match('/litespeed/i',$_SERVER['SERVER_SOFTWARE'])) {
+			$this->Log('ServerSoftwareExt', '<span style="color:#5900B3">'.$_SERVER['SERVER_SOFTWARE'].'&nbsp;(need installed rewrite module to access toolza)</span>');
 			} else {
 			$this->Log('ServerSoftwareExt', '<span style="color:red">'.$_SERVER['SERVER_SOFTWARE'].'</span>'); 
 			}
